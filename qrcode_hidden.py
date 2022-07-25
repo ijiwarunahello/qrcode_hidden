@@ -41,10 +41,15 @@ if __name__ == '__main__':
     # read qr code
     qr = cv2.QRCodeDetector()
     for qr_image in qr_images:
-        img = cv2.imread(str(qr_image.absolute()), cv2.IMREAD_COLOR)
-        data, points, straight_qrcode = qr.detectAndDecode(img)
+        try:
+            print(f"img: {qr_image}")
+            img = cv2.imread(str(qr_image.absolute()))
+            data, points, straight_qrcode = qr.detectAndDecode(img)
 
-        # fill qr code
-        points = points.astype(int)
-        img = cv2.fillPoly(img, [points], tuple(bgr))
-        cv2.imwrite(f"{str(output_path.absolute())}/{qr_image.name}", img)
+            # fill qr code
+            points = points.astype(int)
+            img = cv2.fillPoly(img, [points], tuple(bgr))
+            cv2.imwrite(f"{str(output_path.absolute())}/{qr_image.name}", img)
+
+        except Exception as e:
+            print(e)

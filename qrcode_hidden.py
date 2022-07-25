@@ -14,6 +14,10 @@ if __name__ == '__main__':
     parse.add_argument("--input_dir", "-i", help="Input QR Code image dir", type=pathlib.Path, default="./input")
     parse.add_argument("--output-dir", "-o", help="Hidden QR output dir", type=pathlib.Path, default="./output")
     parse.add_argument("--fill-color", "-c", help="Fill color (Based on Color Names)", default="white")
+    parse.add_argument("--detect-prototxt", help="WeChatQRCode detect.prototxt file path", type=pathlib.Path, default="./opencv_3rdparty/detect.prototxt")
+    parse.add_argument("--detect-caffemodel", help="WeChatQRCode detect.caffemodel file path", type=pathlib.Path, default="./opencv_3rdparty/detect.caffemodel")
+    parse.add_argument("--sr-prototxt", help="WeChatQRCode sr.prototxt file path", type=pathlib.Path, default="./opencv_3rdparty/sr.prototxt")
+    parse.add_argument("--sr-caffemodel", help="WeChatQRCode sr.caffemodel file path", type=pathlib.Path, default="./opencv_3rdparty/sr.caffemodel")
 
     # init
     args = parse.parse_args()
@@ -40,11 +44,22 @@ if __name__ == '__main__':
 
     # read qr code
     qr = cv2.QRCodeDetector()
+    qr_w = cv2.wechat_qrcode.WeChatQRCode(
+        str(args.detect_prototxt.absolute()),
+        str(args.detect_caffemodel.absolute()),
+        str(args.sr_prototxt.absolute()),
+        str(args.sr_caffemodel.absolute())
+    )
     for qr_image in qr_images:
         try:
             print(f"img: {qr_image}")
             img = cv2.imread(str(qr_image.absolute()))
             data, points, straight_qrcode = qr.detectAndDecode(img)
+
+            if data == "":
+                # not detected, use WeChatQRCode
+                data, points = qr_w.detectAndDecode(img)
+                points = points[0]
 
             # fill qr code
             points = points.astype(int)

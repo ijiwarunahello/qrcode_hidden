@@ -1,6 +1,8 @@
-# QRCode Hidden
+# QRCode Hidden Tool
 
 QRコードを隠す（塗りつぶす）ツール
+
+![image](./docs/qr_hidden_img.jpg)
 
 # Env
 

@@ -48,14 +48,17 @@ if __name__ == '__main__':
     )
     for qr_image in qr_images:
         try:
-            print(f"img: {qr_image}")
             img = cv2.imread(str(qr_image.absolute()))
             data, points, straight_qrcode = qr.detectAndDecode(img)
 
             if data == "":
+                print("detect failed. use WeChatQRCode")
                 # not detected, use WeChatQRCode
                 data, points = qr_w.detectAndDecode(img)
-                points = points[0]
+                if data == "":
+                    print("WeChatQRCode detect failed.")
+                else:
+                    points = points[0]
 
             # fill qr code
             points = points.astype(int)
@@ -63,4 +66,4 @@ if __name__ == '__main__':
             cv2.imwrite(f"{str(output_dir_path.absolute())}/{qr_image.name}", img)
 
         except Exception as e:
-            print(e)
+            print(f"qr hidden failed: {e}, img_name: {qr_image}")

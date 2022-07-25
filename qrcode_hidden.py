@@ -26,8 +26,6 @@ if __name__ == '__main__':
     rgb = list(name_to_rgb(args.fill_color))
     rgb[0], rgb[2] = rgb[2], rgb[0]
     bgr = rgb
-    output_dir_name = datetime.datetime.today().strftime("%Y%m%d_%H%M%S_exported")
-    output_path = output_dir_path / output_dir_name
 
     # check exists directory
     if not input_dir_path.exists():
@@ -36,8 +34,6 @@ if __name__ == '__main__':
     if not output_dir_path.exists():
         # create output directory
         os.makedirs(output_dir_path.absolute())
-    if not output_path.exists():
-        os.makedirs(output_path.absolute())
 
     # get jpg/png image
     qr_images = [p for p in input_dir_path.iterdir() if p.suffix in [".jpg", ".png"]]
@@ -64,7 +60,7 @@ if __name__ == '__main__':
             # fill qr code
             points = points.astype(int)
             img = cv2.fillPoly(img, [points], tuple(bgr))
-            cv2.imwrite(f"{str(output_path.absolute())}/{qr_image.name}", img)
+            cv2.imwrite(f"{str(output_dir_path.absolute())}/{qr_image.name}", img)
 
         except Exception as e:
             print(e)

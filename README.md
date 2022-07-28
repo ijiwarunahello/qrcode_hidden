@@ -75,6 +75,8 @@ python qrcode_replace.py input_image.jpg "https://www.hinatazaka46.com/s/officia
 | :--- | :--- |
 | ![before](./docs/before.jpeg) | ![after](./docs/after.jpg) |
 
+※自分のアカウントのQRコードです
+
 ### Usage
 
 ```bash

@@ -65,10 +65,10 @@ optional arguments:
 python qrcode_replace.py <入力画像> <差し替えたい情報>
 ```
 
-例) [あるURL](https://www.hinatazaka46.com/s/official/page/w_keyaki_fes2022)が開くQRコードに差し替えたい場合
+例) [あるURL](https://www.hinatazaka46.com/s/official/artist/10)が開くQRコードに差し替えたい場合
 
 ```bash
-python qrcode_replace.py input_image.jpg "https://www.hinatazaka46.com/s/official/page/w_keyaki_fes2022"
+python qrcode_replace.py input_image.jpg "https://www.hinatazaka46.com/s/official/artist/10"
 ```
 
 | before | after |
